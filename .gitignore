@@ -1,0 +1,30 @@
+# BK-Shoot simplified .gitignore
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Arduino temporary files
+*.elf
+*.hex
+*.bin
+*.eep
+*.map
+*.out
+*.o
+
+# App Inventor / Android build outputs
+*.aab
+*.keystore
+*.dex
+*.class
+*.apk
+*.log
+
+# Build or cache
+build/
+dist/
+*.tmp
+*.bak
