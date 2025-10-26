@@ -67,7 +67,6 @@ See: [`/hardware/bom.md`](hardware/bom.md) and [`/hardware/wiring-table.md`](har
 ## Mobile app
 - Displays **Attempts, Makes, Misses, FG%, Timer**.
 - Saves session history and allows comparisons.
-- See full details in [`/mobile/README.md`](mobile/README.md).
 
 ---
 
