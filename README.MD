@@ -34,7 +34,7 @@ A low-cost hoop-mounted gadget + Android app that detects **makes/misses** in re
 
 ## Hardware
 
-![BK-Shoot circuit diagram](hardware/images/bkshoot-circuit.png)
+![BK-Shoot circuit diagram](hardware/circuit_image.png)
 
 > Circuit showing Arduino Uno connected to Bluetooth, IR proximity sensor, vibration sensor, RGB LED, buzzer, and power bank.
 
@@ -80,7 +80,7 @@ Field tests were conducted with multiple players. Data was exported to SQLite an
 | Mean FG% | 78.2 % |
 | Avg. session time | ~75 s |
 
-![Testing setup](testing/01_setup_installation.png)
+![Testing setup](testing/01_setup_guide.png)
 
 See all screenshots and analysis: [`/testing/`](testing/)
 
