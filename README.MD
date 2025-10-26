@@ -2,56 +2,135 @@
 
 A low-cost hoop-mounted gadget + Android app that detects **makes/misses** in real time and tracks shooting stats. Built with **Arduino** sensors (IR + vibration) and a **Bluetooth** link to a MIT App Inventor app.
 
-> Status: **v1.0 (public release)** · License: **MIT** · Languages: **EN / ES**
+> Status: **v1.0 (public release)** · License: **MIT** · 
 
+---
 
-## Demo
-_Add a 10–20 s GIF/MP4 here showing the device classifying shots and the app updating counts._
+## Table of contents
+- [Demo](#demo)
+- [Features](#features)
+- [Hardware](#hardware)
+- [How it works](#how-it-works)
+- [Quickstart](#quickstart)
+- [Mobile app](#mobile-app)
+- [Testing & validation](#testing--validation)
+- [Known limitations](#known-limitations)
+- [Roadmap & future improvements](#roadmap--future-improvements)
+- [Recognition](#recognition)
+- [Cite](#cite)
+- [License](#license)
 
 ---
 
 ## Features
-- Real time **make/miss** classification using **IR** (ball crossing rim plane) + **vibration** (impact at rim/backboard).
-- On device feedback: **RGB LED** + **buzzer**.
-- Bluetooth (HC-05/HC-06) Android app that shows: **Attempts, Makes, FG%, Session timer**, and **per session history**.
-- **Session comparison**: review previous sessions and track progress over time (FG% trend, attempts/min).
-- One file firmware with simple **on court calibration commands**.
-- Clear documentation: BOM, wiring tables, validation protocol, and data schema.
+- Real-time **make/miss** classification using **IR** + **vibration** fusion.
+- On-device feedback: **RGB LED** + **buzzer**.
+- Bluetooth (HC-05/HC-06) Android app displaying **Attempts, Makes, FG%, Timer**, and **session history**.
+- **Session comparison**: monitor accuracy and progress over time.
+- Simple runtime configuration (`CFG WIN`, `CFG DEB`).
+- Fully documented build: circuit, app, enclosure, testing.
 
 ---
 
 ## Hardware
-- Microcontroller: **Arduino Uno/Nano (5V)**
-- Sensors: **IR proximity** (E18-D80NK / GP2Y0A21) + **vibration module** (SW-420)
-- Comms: **HC-05 / HC-06** Bluetooth
-- Output: **RGB LED** (+ 3×220 Ω resistors), **passive buzzer**
-- Power: **5 V** (USB power bank)
-- Mounting: Simple bracket/enclosure (see `/hardware`)
+
+![BK-Shoot circuit diagram](hardware/images/bkshoot-circuit.png)
+
+> Circuit showing Arduino Uno connected to Bluetooth, IR proximity sensor, vibration sensor, RGB LED, buzzer, and power bank.
 
 See: [`/hardware/bom.md`](hardware/bom.md) and [`/hardware/wiring-table.md`](hardware/wiring-table.md).
 
 ---
 
 ## How it works
-**Sensor fusion:** when the IR sensor triggers (ball crosses the rim plane), firmware opens a short time window (**FUSE_WINDOW_MS**) to check for vibration. The three practical outcomes are:
+**Sensor fusion logic:**
 
-1. **Ball goes in with no vibration** → **MAKE** (clean swish; IR triggers, no impact).
-2. **Ball touches rim/backboard and goes in with vibration** → **MAKE** (IR + vibration within window).
-3. **Ball impacts rim/backboard and goes out** → **MISS** (IR triggers; vibration occurs, but logic classifies overall as miss because the ball doesn’t clear as a valid make; see Notes below).
+| Case | Event | Classification |
+|------|--------|----------------|
+| Ball crosses rim plane (no vibration) | “clean swish” | MAKE |
+| Ball crosses rim plane + vibration | “off-rim make” | MAKE |
+| Ball vibration only (no rim cross) | “rim-out” | MISS |
 
-> **Notes:** Physical setups vary. Some misses will still produce an IR trigger without a successful make; the fusion window and debounce help disambiguate. Tune `FUSE_WINDOW_MS` and mounting to minimize edge cases (e.g., long rattles or soft bank shots).
+> The firmware waits a short period (**FUSE_WINDOW_MS**) after IR detection to check for vibration before classifying.
 
 ---
 
 ## Quickstart
-1. **Assemble hardware** per `/hardware`.
-2. **Flash firmware**: open [`/firmware/bk-shoot.ino`](firmware/bk-shoot.ino) in Arduino IDE → select board/port → **Upload**.
-3. **Pair Bluetooth**: phone → Bluetooth → pair **HC-05** (PIN `1234` or `0000`).
-4. **Install app**:
-   - Import [`/mobile/bk-shoot.aia`](mobile/bk-shoot.aia) into [MIT App Inventor](https://appinventor.mit.edu/).
-   - Build `.apk`, install on your Android phone.
-5. **Calibrate**:
-   - Mount the IR so it trips only when the ball fully crosses the rim plane.
-   - Start with `FUSE_WINDOW_MS = 1000` and `DEBOUNCE_MS = 250`.
-   - Use the serial/Bluetooth commands below to tune without reflashing.
-6. **Test 10–20 shots** and adjust the window if needed.
+1. Assemble components per `/hardware/`.
+2. Open `/firmware/bk-shoot.ino` in Arduino IDE and upload.
+3. Pair Bluetooth: **HC-05**, PIN `1234` or `0000`.
+4. Open MIT App Inventor → import `/mobile/bk-shoot.aia` → build `.apk`.
+5. Install the app and connect via Bluetooth.
+
+---
+
+## Mobile app
+- Displays **Attempts, Makes, Misses, FG%, Timer**.
+- Saves session history and allows comparisons.
+- See full details in [`/mobile/README.md`](mobile/README.md).
+
+---
+
+## Testing & validation
+Field tests were conducted with multiple players. Data was exported to SQLite and analyzed.
+
+| Metric | Average |
+|--------|----------|
+| Participants | 20+ |
+| Shots/min | 24.5 |
+| Mean FG% | 78.2 % |
+| Avg. session time | ~75 s |
+
+![Testing setup](testing/01_setup_installation.png)
+
+See all screenshots and analysis: [`/testing/`](testing/)
+
+---
+
+## Known limitations
+- **Soft bank shots** may under-vibrate → false miss.  
+- **Rim rattles** may trigger false make if IR too permissive.  
+- **Bright sunlight** can affect IR readings → shade or use better sensor.
+
+---
+
+## Roadmap & Future Improvements
+
+### Short-term
+- Add calibration UI and CSV export to the Android app.  
+- Improve vibration filtering.  
+- Enhance LED feedback patterns.
+
+### Long-term upgrades
+1. **App rewrite in React Native (or Flutter)**  
+ - Modern cross-platform app (Android + iOS).  
+ - Improved UI/UX, charts, and cloud sync.  
+ - Real-time analytics dashboard.
+
+2. **Firmware & hardware upgrade to ESP32 (BLE)**  
+ - Replace HC-05 Bluetooth module.  
+ - Lower power, faster pairing, OTA updates.
+
+3. **Data & Cloud integration**  
+ - Store sessions in SQLite or Firebase.  
+ - Web dashboard (React / Next.js) for player analytics.
+
+4. **Machine learning (TinyML)**  
+ - On-device model to auto-classify “make/miss” based on vibration and timing.
+
+> Goal: turn BK-Shoot from a working prototype into a professional **smart training platform** for players, coaches, and sport scientists.
+
+---
+
+## Recognition
+- Presented at **ICFO Young Photonics Congress (2021)**.
+
+---
+
+## Cite
+See [`CITATION.cff`](CITATION.cff).
+
+---
+
+## License
+MIT — see [`LICENSE`](LICENSE).

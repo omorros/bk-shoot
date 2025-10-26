@@ -1,25 +1,14 @@
 cff-version: 1.2.0
-message: >
-  If you use this project, please cite it as below.
 title: "BK-Shoot: Arduino + MIT App Inventor basketball shot tracker"
 authors:
   - family-names: Morros Vilaseca
     given-names: Oriol
 version: "1.0.0"
-date-released: 2025-10-23
+date-released: 2025-10-26
 repository-code: "https://github.com/omorros/bk-shoot"
 license: MIT
-type: software
-keywords:
-  - arduino
-  - bluetooth
-  - mit app inventor
-  - basketball
-  - sensing
-  - sports technology
-  - ai for sport
+keywords: [arduino, bluetooth, basketball, sports-tech, mit app inventor, react native, esp32]
 abstract: >
-  BK-Shoot is an open-source basketball shot tracking system that combines Arduino-based
-  sensing (IR and vibration fusion) with a custom Android app built in MIT App Inventor.
-  It detects makes and misses in real time, provides visual and auditory feedback, and
-  allows users to track their shooting performance across sessions through Bluetooth connectivity.
+  BK-Shoot is a low-cost basketball shot-tracking system combining Arduino-based
+  IR and vibration sensing with an Android app built in MIT App Inventor.
+  Future releases will migrate to React Native and ESP32 BLE for professional scalability.
