@@ -4,7 +4,7 @@
 
 A low-cost IoT device that detects basketball makes/misses in real time using IR + vibration sensor fusion, paired with an Android app for live statistics tracking.
 
-[![Demo Video](https://img.shields.io/badge/Demo-Video-red?style=for-the-badge&logo=youtube)]([testing/02_testing_video.mp4](https://github.com/user-attachments/assets/b2f04fc3-4c96-47cb-862c-22dc06aca971))
+[![Demo Video](https://img.shields.io/badge/Demo-Video-red?style=for-the-badge&logo=youtube)](#demo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Award](https://img.shields.io/badge/Award-Planter%202021-gold?style=for-the-badge)](recognition/AWARDS.md)
 
@@ -12,9 +12,7 @@ A low-cost IoT device that detects basketball makes/misses in real time using IR
 
 ## Demo
 
-https://github.com/user-attachments/assets/demo-video
-
-> **Note:** If the video doesn't load, see [`/testing/02_testing_video.mp4`](testing/02_testing_video.mp4)
+https://github.com/user-attachments/assets/b2f04fc3-4c96-47cb-862c-22dc06aca971
 
 ![Setup](testing/01_setup_guide.png)
 
