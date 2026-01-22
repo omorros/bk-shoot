@@ -45,36 +45,33 @@ https://github.com/user-attachments/assets/b2f04fc3-4c96-47cb-862c-22dc06aca971
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         BASKETBALL HOOP                             │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐           │
-│  │  IR Sensor   │    │  Vibration   │    │   Arduino    │           │
-│  │ (E18-D80NK)  │───▶│   Sensor     │───▶│     Uno     │           │
-│  │              │    │  (SW-420)    │    │              │           │
-│  └──────────────┘    └──────────────┘    └──────┬───────┘           │
-│                                                  │                  │
-│                           ┌──────────────────────┘                  │
-│                           ▼                                         │
-│                    ┌──────────────┐                                 │
-│                    │   HC-05 BT   │                                 │
-│                    │   Module     │                                 │
-│                    └──────┬───────┘                                 │
-└───────────────────────────│─────────────────────────────────────────┘
-                            │ Bluetooth
-                            ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                        ANDROID APP                                  │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐           │
-│  │   Bluetooth  │───▶│  Statistics  │───▶│   SQLite    │           │
-│  │   Receiver   │    │   Engine     │    │   Storage    │           │
-│  └──────────────┘    └──────────────┘    └──────────────┘           │
-│                           │                                         │
-│                           ▼                                         │
-│  ┌─────────────────────────────────────────────────────────────┐    │
-│  │  Live Dashboard: Attempts | Makes | Misses | FG% | Timer    │    │
-│  └─────────────────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph HOOP ["BASKETBALL HOOP"]
+        direction TB
+        IR["IR Sensor<br>(E18-D80NK)"]
+        VIB["Vibration Sensor<br>(SW-420)"]
+        UNO["Arduino Uno"]
+        HC05["HC-05 BT Module"]
+        
+        IR --> UNO
+        VIB --> UNO
+        UNO --> HC05
+    end
+
+    subgraph APP ["ANDROID APP"]
+        direction TB
+        BT_RX["Bluetooth Receiver"]
+        STATS["Statistics Engine"]
+        DB["SQLite Storage"]
+        DASH["Live Dashboard:<br/>Attempts | Makes | Misses | FG% | Timer"]
+        
+        BT_RX --> STATS
+        STATS --> DB
+        STATS --> DASH
+    end
+
+    HC05 -.->|Bluetooth| BT_RX
 ```
 
 ---
@@ -85,10 +82,11 @@ https://github.com/user-attachments/assets/b2f04fc3-4c96-47cb-862c-22dc06aca971
 
 The core innovation is combining two sensors to achieve accurate shot classification:
 
-```
-IR Trigger (ball passes rim) ──┐
-                               ├──▶ Fusion Window (1000ms) ──▶ Classification
-Vibration (rim impact) ────────┘
+```mermaid
+graph LR
+    IR["IR Trigger<br>(ball passes rim)"] --> FUSION
+    VIB["Vibration<br>(rim impact)"] --> FUSION
+    FUSION["Fusion Window<br>(1000ms)"] --> CLASS["Classification"]
 ```
 
 | Scenario | IR | Vibration | Result |
