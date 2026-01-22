@@ -20,7 +20,7 @@ This project has been recognized in academic and scientific competitions.
 - **Tutor:** Pau Pons Clotet
 - **School:** Oms i de Prat, Manresa
 
-**Note:** The official ceremony slides spell the surname as "Mooros"; it refers to Oriol Moros Vilaseca.
+**Note:** The official ceremony slides spell the surname as "Mooros"; it refers to Oriol Morros Vilaseca
 
 ### Organizing Institutions
 - Universitat Politecnica de Catalunya (UPC)
