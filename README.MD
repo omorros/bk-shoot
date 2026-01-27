@@ -244,7 +244,7 @@ bk-shoot/
 
 ## About
 
-**Author:** Oriol Moros Vilaseca
+**Author:** Oriol Morros Vilaseca
 
 This project was developed as a secondary school research project (*Treball de Recerca*) at age 15, combining my interests in basketball, electronics, and programming. It demonstrates end-to-end product development: from problem identification through hardware design, firmware development, mobile app creation, and statistical validation.
 
@@ -262,7 +262,7 @@ If you use this project in research or teaching:
 
 ```bibtex
 @software{bkshoot2021,
-  author = {Moros Vilaseca, Oriol},
+  author = {Morros Vilaseca, Oriol},
   title = {BK-Shoot: Arduino + MIT App Inventor Basketball Shot Tracker},
   year = {2021},
   url = {https://github.com/omorros/bk-shoot}
