@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: "BK-Shoot: Arduino + MIT App Inventor basketball shot tracker"
 authors:
-  - family-names: Moros Vilaseca
+  - family-names: Morros Vilaseca
     given-names: Oriol
 version: "1.0.0"
 date-released: 2025-10-26
